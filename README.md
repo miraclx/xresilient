@@ -54,7 +54,7 @@ For instance, get requests interrupted by network errors can be resumed without 
 
 * `fn`: &lt;[GenFn](#genfn)&gt;
 * `options` <sub>`extends`</sub> [`NodeJS.ReadableOptions`][NodeJS.ReadableOptions]: [`Object`][object]
-  * `retries`: &lt;[number][]&gt;
+  * `retries`: &lt;[number][]&gt; Number of times to retry the stream. **Default**: `5`.
 * Returns: &lt;[ResilientStream](#resilientstream)&gt;
 
 Return a regenerative, persistent, resuming, resilient stream wrapped
