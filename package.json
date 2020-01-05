@@ -1,0 +1,34 @@
+{
+  "name": "xresilient",
+  "version": "0.0.1",
+  "description": "Build regenerative, resumable NodeJS streams",
+  "main": "lib/index.js",
+  "types": "typings/index.d.ts",
+  "scripts": {
+    "push": "git push github master"
+  },
+  "engines": {
+    "node": ">=6"
+  },
+  "files": [
+    "dist",
+    "typings"
+  ],
+  "directories": {
+    "lib": "lib"
+  },
+  "keywords": [],
+  "author": "Miraculous Owonubi <omiraculous@gmail.com>",
+  "maintainers": [
+    "Miraculous Owonubi <omiraculous@gmail.com>"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:miraclx/xresilient.git"
+  },
+  "bugs": {
+    "url": "https://github.com/miraclx/xresilient/issues"
+  },
+  "license": "Apache-2.0",
+  "dependencies": {}
+}
