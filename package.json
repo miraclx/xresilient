@@ -5,7 +5,8 @@
   "main": "lib/index.js",
   "types": "typings/index.d.ts",
   "scripts": {
-    "push": "git push github master"
+    "push": "git push github master",
+    "postversion": "git push github master"
   },
   "engines": {
     "node": ">=6"
