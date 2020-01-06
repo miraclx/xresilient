@@ -74,7 +74,7 @@ This event is emitted right before the [genFn](#genfn) is called.
 
 ### <a id='genfn'></a>GenFn: [`Function`][function]
 
-* `storeSlice`:
+* `storeSlice`: &lt;[object][]&gt;
   * `retryCount`: &lt;[number][]&gt; The trial count of this iteration.
   * `bytesRead`: &lt;[number][]&gt; The number of bytes previously read (if any).
   * `oldStream`: &lt;[NodeJS.ReadableStream][]&gt; The old stream that error-ed out (if any).
@@ -139,4 +139,5 @@ npm run build
 
 [number]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type
 [object]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object
+[boolean]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Boolean_type
 [function]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function
