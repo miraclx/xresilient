@@ -62,6 +62,15 @@ That swaps underlying stream source without data loss.
 
 The `fn` argument must be a function taking two arguments returning a Readable Stream.
 
+#### Event: 'retry'
+
+* `retryCount`: &lt;[number][]&gt; The number of trial iterations so far.
+* `bytesRead`: &lt;[number][]&gt; The number of bytes already read by the old stream.
+
+The `'retry'` event is emitted after a stream's `'error'` event is emitted and the stream hasn't used up all of it's retries.
+
+This event is emitted right before the [genFn](#genfn) is called.
+
 ### <a id='genfn'></a>GenFn: [`Function`][function]
 
 * `storeSlice`:
