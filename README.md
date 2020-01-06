@@ -64,8 +64,9 @@ The `fn` argument must be a function taking two arguments returning a Readable S
 
 #### Event: 'retry'
 
-* `retryCount`: &lt;[number][]&gt; The number of trial iterations so far.
-* `bytesRead`: &lt;[number][]&gt; The number of bytes already read by the old stream.
+* `dataSlice`: &lt;[object][]&gt;
+  * `retryCount`: &lt;[number][]&gt; The number of trial iterations so far.
+  * `bytesRead`: &lt;[number][]&gt; The number of bytes already read by the old stream.
 
 The `'retry'` event is emitted after a stream's `'error'` event is emitted and the stream hasn't used up all of it's retries.
 
