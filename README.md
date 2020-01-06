@@ -83,6 +83,27 @@ This event is emitted right before the [genFn](#genfn) is called.
 
 The Core resilient stream whose data is streamed off of the underlying streams gotten from the [GenFn](#genfn).
 
+### <a id='resilientstream_setretries'></a>ResilientStream.setRetries(retries)
+
+* `retries`: &lt;[number][]&gt; The retry value to update to.
+* Returns: &lt;[boolean][]&gt;
+
+This method sets the number of possible retries.
+If the `retryCount` is less than this value, returns `false`.
+else, returns `true` on successful setting.
+
+### <a id='resilientstream_getretries'></a>ResilientStream.getRetries()
+
+* Returns: &lt;[number][]&gt;
+
+Returns the value of max possible retries before error emit.
+
+### <a id='resilientstream_getretrycount'></a>ResilientStream.getRetryCount()
+
+* Returns: &lt;[number][]&gt;
+
+Returns the number of the retries so-far.
+
 ## Development
 
 ### Building

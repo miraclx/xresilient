@@ -14,6 +14,9 @@ function xresilient<T = NodeJS.ReadableStream>(
 
 interface _ResilientStream {
   on(event: 'retry', listener: (retryCount: number, bytesRead: number) => void): this;
+  setRetries(retries: number): boolean;
+  getRetries(): number;
+  getRetryCount(): number;
 }
 
 namespace xresilient {
