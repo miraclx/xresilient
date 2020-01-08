@@ -53,14 +53,14 @@ For instance, get requests interrupted by network errors can be resumed without 
 ### xresilient(fn[, options])
 
 * `fn`: &lt;[GenFn](#genfn)&gt;
-* `options` <sub>`extends`</sub> [`NodeJS.ReadableOptions`][NodeJS.ReadableOptions]: [`Object`][object]
+* `options` <sub>`extends`</sub> [`stream.TransformOptions`][stream.TransformOptions]: [`Object`][object]
   * `retries`: &lt;[number][]&gt; Number of times to retry the stream. **Default**: `5`.
 * Returns: &lt;[ResilientStream](#resilientstream)&gt;
 
 Return a regenerative, persistent, resuming, resilient stream wrapped
 That swaps underlying stream source without data loss.
 
-The `fn` argument must be a function taking two arguments returning a Readable Stream.
+The `fn` argument must be a function taking two arguments returning a ResilientStream.
 
 #### Event: 'retry'
 
@@ -81,7 +81,7 @@ This event is emitted right before the [genFn](#genfn) is called.
   * `oldStream`: &lt;[NodeJS.ReadableStream][]&gt; The old stream that error-ed out (if any).
 * Returns: &lt;[NodeJS.ReadableStream][]&gt;
 
-### <a id='resilientstream'></a>ResilientStream <sub>`extends`</sub> [NodeJS.ReadableStream][]
+### <a id='resilientstream'></a>ResilientStream <sub>`extends`</sub> [stream.Transform][]
 
 The Core resilient stream whose data is streamed off of the underlying streams gotten from the [GenFn](#genfn).
 
@@ -124,9 +124,9 @@ npm run build
 
 [Apache 2.0][license] © **Miraculous Owonubi** ([@miraclx][author-url]) &lt;omiraculous@gmail.com&gt;
 
+[stream.Transform]: https://nodejs.org/api/stream.html#stream_class_stream_transform
 [NodeJS.ReadableStream]: https://nodejs.org/api/stream.html#stream_class_stream_readable
-
-[NodeJS.ReadableOptions]: https://nodejs.org/api/stream.html#stream_new_stream_readable_options
+[stream.TransformOptions]: https://nodejs.org/api/stream.html#stream_new_stream_transform_options
 
 [npm]:  https://github.com/npm/cli "The Node Package Manager"
 [license]:  LICENSE "Apache 2.0 License"

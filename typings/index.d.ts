@@ -20,7 +20,7 @@ interface _ResilientStream {
 }
 
 namespace xresilient {
-  interface ResilientOpts extends stream.ReadableOptions {
+  interface ResilientOpts extends stream.TransformOptions {
     retries: number;
   }
   interface ResilientStore<T> {
@@ -28,7 +28,7 @@ namespace xresilient {
     bytesRead: number;
     oldStream: T;
   }
-  interface ResilientStream<T> extends ProtoExtends<NodeJS.ReadableStream, _ResilientStream> { }
+  interface ResilientStream<T> extends ProtoExtends<stream.Transform, _ResilientStream> { }
 }
 
 export = xresilient;
