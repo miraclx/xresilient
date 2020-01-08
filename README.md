@@ -53,7 +53,7 @@ For instance, get requests interrupted by network errors can be resumed without 
 ### xresilient(fn[, options])
 
 * `fn`: &lt;[GenFn](#genfn)&gt;
-* `options` <sub>`extends`</sub> [`stream.TransformOptions`][stream.TransformOptions]: [`Object`][object]
+* `options` <sub>`extends`</sub> [`stream.TransformOptions`][stream.TransformOptions]: [Object][object]
   * `retries`: &lt;[number][]&gt; Number of times to retry the stream. **Default**: `5`.
 * Returns: &lt;[ResilientStream](#resilientstream)&gt;
 
@@ -64,10 +64,7 @@ The `fn` argument must be a function taking two arguments returning a ResilientS
 
 #### Event: 'retry'
 
-* `dataSlice`: &lt;[object][]&gt;
-  * `retryCount`: &lt;[number][]&gt; The number of trial iterations so far.
-  * `bytesRead`: &lt;[number][]&gt; The number of bytes already read by the old stream.
-  * `lastErr`: &lt;[Error][]&gt; The error emitted by the previous stream.
+* `retrySlice`: &lt;[RetrySlice](#retryslice)&gt;
 
 The `'retry'` event is emitted after a stream's `'error'` event is emitted and the stream hasn't used up all of it's retries.
 
@@ -75,15 +72,23 @@ This event is emitted right before the [genFn](#genfn) is called.
 
 ### <a id='genfn'></a>GenFn: [`Function`][function]
 
-* `storeSlice`: &lt;[object][]&gt;
-  * `retryCount`: &lt;[number][]&gt; The trial count of this iteration.
-  * `bytesRead`: &lt;[number][]&gt; The number of bytes previously read (if any).
-  * `oldStream`: &lt;[NodeJS.ReadableStream][]&gt; The old stream that error-ed out (if any).
+* `storeSlice`: &lt;[ResilientStore](#resilientstore)&gt;
 * Returns: &lt;[NodeJS.ReadableStream][]&gt;
 
 ### <a id='resilientstream'></a>ResilientStream <sub>`extends`</sub> [stream.Transform][]
 
 The Core resilient stream whose data is streamed off of the underlying streams gotten from the [GenFn](#genfn).
+
+### <a id='retryslice'></a>RetrySlice: [object][]
+
+* `retryCount`: &lt;[number][]&gt; The number of retry iterations so far.
+* `bytesRead`: &lt;[number][]&gt; The number of bytes previously read (if any).
+* `lastErr`: &lt;[Error][]&gt; The error emitted by the previous stream.
+* `oldStream`: &lt;[NodeJS.ReadableStream][]&gt; The old stream that error-ed out (if any).
+
+### <a id='resilientstore'></a>ResilientStore <sub>`extends`</sub> [RetrySlice](#retryslice): [object][]
+
+* `chunkCount`: &lt;[number][]&gt; The active execution iteration count.
 
 ### <a id='resilientstream_setretries'></a>ResilientStream.setRetries(retries)
 
@@ -138,6 +143,7 @@ npm run build
 [downloads-url]: https://npmjs.org/package/xresilient
 [downloads-image]: https://badgen.net/npm/dm/xresilient
 
+[Error]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error
 [number]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type
 [object]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object
 [boolean]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Boolean_type

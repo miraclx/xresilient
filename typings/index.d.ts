@@ -8,27 +8,33 @@ import * as stream from 'stream';
 
 type ProtoExtends<T, U> = U & Omit<T, keyof U>;
 
-function xresilient<T = NodeJS.ReadableStream>(
+declare function xresilient<T = NodeJS.ReadableStream>(
   fn: (storeSlice: xresilient.ResilientStore<T>) => T, options?: xresilient.ResilientOpts
 ): xresilient.ResilientStream<T>;
 
-interface _ResilientStream {
-  on(event: 'retry', listener: (dataSlice: { retryCount: number, bytesRead: number, lastErr: Error }) => void): this;
+interface _ResilientStream<T> {
+  on(event: 'retry', listener: (retrySlice: xresilient.RetrySlice<T>) => void): this;
   setRetries(retries: number): boolean;
   getRetries(): number;
   getRetryCount(): number;
 }
 
-namespace xresilient {
+declare namespace xresilient {
   interface ResilientOpts extends stream.TransformOptions {
     retries: number;
   }
-  interface ResilientStore<T> {
+  interface RetrySlice<T> {
     retryCount: number;
     bytesRead: number;
+    lastErr: Error;
     oldStream: T;
   }
-  interface ResilientStream<T> extends ProtoExtends<stream.Transform, _ResilientStream> { }
+
+  interface ResilientStore<T> extends RetrySlice<T> {
+    chunkCount: number;
+  }
+
+  interface ResilientStream<T> extends ProtoExtends<stream.Transform, _ResilientStream<T>> { }
 }
 
 export = xresilient;
