@@ -55,6 +55,8 @@ For instance, get requests interrupted by network errors can be resumed without 
 * `fn`: &lt;[GenFn](#genfn)&gt;
 * `options` <sub>`extends`</sub> [`stream.ReadableOptions`][stream.ReadableOptions]: [Object][object]
   * `retries`: &lt;[number][]&gt; Number of times to retry the stream. **Default**: `5`.
+  * `destroyer`: &lt;[function][]&gt; Method with which to destroy the underlying stream.
+    * `source`: &lt;[NodeJS.ReadableStream][]&gt; Readable stream returned by the specified `fn` function.
 * Returns: &lt;[ResilientStream](#resilientstream)&gt;
 
 Return a regenerative, persistent, resuming, resilient stream wrapped

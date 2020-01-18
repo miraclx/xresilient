@@ -9,7 +9,7 @@ import * as stream from 'stream';
 type ProtoExtends<T, U> = U & Omit<T, keyof U>;
 
 declare function xresilient<T = NodeJS.ReadableStream>(
-  fn: (storeSlice: xresilient.ResilientStore<T>) => T, options?: xresilient.ResilientOpts
+  fn: (storeSlice: xresilient.ResilientStore<T>) => T, options?: xresilient.ResilientOpts<T>
 ): xresilient.ResilientStream<T>;
 
 interface _ResilientStream<T> {
@@ -20,8 +20,9 @@ interface _ResilientStream<T> {
 }
 
 declare namespace xresilient {
-  interface ResilientOpts extends stream.ReadableOptions {
+  interface ResilientOpts<T> extends stream.ReadableOptions {
     retries: number;
+    destroyer(source: T): void;
   }
   interface RetrySlice<T> {
     retryCount: number;
