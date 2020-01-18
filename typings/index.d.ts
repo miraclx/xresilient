@@ -20,7 +20,7 @@ interface _ResilientStream<T> {
 }
 
 declare namespace xresilient {
-  interface ResilientOpts extends stream.TransformOptions {
+  interface ResilientOpts extends stream.ReadableOptions {
     retries: number;
   }
   interface RetrySlice<T> {
@@ -34,7 +34,7 @@ declare namespace xresilient {
     chunkCount: number;
   }
 
-  interface ResilientStream<T> extends ProtoExtends<stream.Transform, _ResilientStream<T>> { }
+  interface ResilientStream<T> extends ProtoExtends<stream.Readable, _ResilientStream<T>> { }
 }
 
 export = xresilient;
