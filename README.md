@@ -53,7 +53,7 @@ For instance, get requests interrupted by network errors can be resumed without 
 ### xresilient(fn[, options])
 
 * `fn`: &lt;[GenFn](#genfn)&gt;
-* `options` <sub>`extends`</sub> [`stream.TransformOptions`][stream.TransformOptions]: [Object][object]
+* `options` <sub>`extends`</sub> [`stream.ReadableOptions`][stream.ReadableOptions]: [Object][object]
   * `retries`: &lt;[number][]&gt; Number of times to retry the stream. **Default**: `5`.
 * Returns: &lt;[ResilientStream](#resilientstream)&gt;
 
@@ -75,7 +75,7 @@ This event is emitted right before the [genFn](#genfn) is called.
 * `storeSlice`: &lt;[ResilientStore](#resilientstore)&gt;
 * Returns: &lt;[NodeJS.ReadableStream][]&gt;
 
-### <a id='resilientstream'></a>ResilientStream <sub>`extends`</sub> [stream.Transform][]
+### <a id='resilientstream'></a>ResilientStream <sub>`extends`</sub> [stream.Readable][]
 
 The Core resilient stream whose data is streamed off of the underlying streams gotten from the [GenFn](#genfn).
 
@@ -129,9 +129,9 @@ npm run build
 
 [Apache 2.0][license] © **Miraculous Owonubi** ([@miraclx][author-url]) &lt;omiraculous@gmail.com&gt;
 
-[stream.Transform]: https://nodejs.org/api/stream.html#stream_class_stream_transform
+[stream.Readable]: https://nodejs.org/api/stream.html#stream_class_stream_readable
 [NodeJS.ReadableStream]: https://nodejs.org/api/stream.html#stream_class_stream_readable
-[stream.TransformOptions]: https://nodejs.org/api/stream.html#stream_new_stream_transform_options
+[stream.ReadableOptions]: https://nodejs.org/api/stream.html#stream_new_stream_readable_options
 
 [npm]:  https://github.com/npm/cli "The Node Package Manager"
 [license]:  LICENSE "Apache 2.0 License"
