@@ -72,6 +72,20 @@ The `'retry'` event is emitted after a stream's `'error'` event is emitted and t
 
 This event is emitted right before the [genFn](#genfn) is called.
 
+#### Event: 'error'
+
+* `err`: &lt;[Error][]&gt;
+
+The `'error'` event is emitted when the underlying readable stream encounters an `'error'` event while the resilient stream has maxed-out all possible retries.
+i.e
+
+```javascript
+self.getRetries() === self.getRetryCount()
+```
+
+At this point, the resilient stream is destroyed and the specified [GenFn](#genfn) isn't called.
+This, ends the resilient iteration.
+
 ### <a id='genfn'></a>GenFn: [`Function`][function]
 
 * `storeSlice`: &lt;[ResilientStore](#resilientstore)&gt;
