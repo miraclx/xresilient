@@ -98,6 +98,7 @@ The Core resilient stream whose data is streamed off of the underlying streams g
 ### <a id='retryslice'></a>RetrySlice: [object][]
 
 * `retryCount`: &lt;[number][]&gt; The number of retry iterations so far.
+* `maxRetries`: &lt;[number][]&gt; The maximum number of retries possible.
 * `bytesRead`: &lt;[number][]&gt; The number of bytes previously read (if any).
 * `lastErr`: &lt;[Error][]&gt; The error emitted by the previous stream.
 * `oldStream`: &lt;[NodeJS.ReadableStream][]&gt; The old stream that error-ed out (if any).

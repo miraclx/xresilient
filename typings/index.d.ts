@@ -26,6 +26,7 @@ declare namespace xresilient {
   }
   interface RetrySlice<T> {
     retryCount: number;
+    maxRetries: number;
     bytesRead: number;
     lastErr: Error;
     oldStream: T;
