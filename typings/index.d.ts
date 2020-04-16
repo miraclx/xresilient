@@ -13,7 +13,11 @@ declare function xresilient<T = NodeJS.ReadableStream>(
 ): xresilient.ResilientStream<T>;
 
 interface _ResilientStream<T> {
+  on(event: 'data', listener: (chunk: any) => void): this;
+  on(event: 'end', listener: () => void): this;
   on(event: 'retry', listener: (retrySlice: xresilient.RetrySlice<T>) => void): this;
+  on(event: 'readable', listener: () => void): this;
+  on(event: 'error', listener: (err: Error) => void): this;
   setRetries(retries: number): boolean;
   getRetries(): number;
   getRetryCount(): number;
