@@ -62,13 +62,16 @@ For instance, get requests interrupted by network errors can be resumed without 
 Return a regenerative, persistent, resuming, resilient stream wrapped
 That swaps underlying stream source without data loss.
 
-The `fn` argument must be a function taking two arguments returning a ResilientStream.
+The `fn` argument must be a function or async function taking two arguments returning a ResilientStream.
+
+Returning an ended readable stream forces the resilient stream to be ended.
+Returning a destroyed stream forces the resilient stream to retry the generator once until the limit is reached.
 
 #### Event: 'retry'
 
 * `retrySlice`: &lt;[RetrySlice](#retryslice)&gt;
 
-The `'retry'` event is emitted after a stream's `'error'` event is emitted and the stream hasn't used up all of it's retries.
+The `'retry'` event is emitted after an error is caught either within the active stream source or the generative function and the stream hasn't used up all of it's retries.
 
 This event is emitted right before the [genFn](#genfn) is called.
 
@@ -76,7 +79,7 @@ This event is emitted right before the [genFn](#genfn) is called.
 
 * `err`: &lt;[Error][]&gt;
 
-The `'error'` event is emitted when the underlying readable stream encounters an `'error'` event while the resilient stream has maxed-out all possible retries.
+The `'error'` event is emitted either when the underlying readable stream encounters an `'error'`  event or the generative function throws an error while the resilient stream has maxed-out all possible retries.
 i.e
 
 ```javascript
@@ -86,10 +89,15 @@ self.getRetries() === self.getRetryCount()
 At this point, the resilient stream is destroyed and the specified [GenFn](#genfn) isn't called.
 This, ends the resilient iteration.
 
-### <a id='genfn'></a>GenFn: [`Function`][function]
+### <a id='genfn'></a>GenFn: [`Function`][function]|[`AsyncFunction`][asyncfunction]
 
 * `storeSlice`: &lt;[ResilientStore](#resilientstore)&gt;
 * Returns: &lt;[NodeJS.ReadableStream][]&gt;
+
+Generator function returning a readable stream.
+Errors / Promise rejections caught during this function's execution would be emitted through the `error` event.
+
+This function can either be an async function or a normal function.
 
 ### <a id='resilientstream'></a>ResilientStream <sub>`extends`</sub> [stream.Readable][]
 
@@ -97,15 +105,15 @@ The Core resilient stream whose data is streamed off of the underlying streams g
 
 ### <a id='retryslice'></a>RetrySlice: [object][]
 
-* `retryCount`: &lt;[number][]&gt; The number of retry iterations so far.
+* `retryCount`: &lt;[number][]&gt; The number of retry iterations so far. (starting from 0)
 * `maxRetries`: &lt;[number][]&gt; The maximum number of retries possible.
 * `bytesRead`: &lt;[number][]&gt; The number of bytes previously read (if any).
-* `lastErr`: &lt;[Error][]&gt; The error emitted by the previous stream.
+* `lastErr`: &lt;[Error][]&gt; The error emitted either by the last generator function execution or previous stream.
 * `oldStream`: &lt;[NodeJS.ReadableStream][]&gt; The old stream that error-ed out (if any).
 
 ### <a id='resilientstore'></a>ResilientStore <sub>`extends`</sub> [RetrySlice](#retryslice): [object][]
 
-* `chunkCount`: &lt;[number][]&gt; The active execution iteration count.
+* `trialCount`: &lt;[number][]&gt; The active execution iteration count. (starting from 1)
 
 ### <a id='resilientstream_setretries'></a>ResilientStream.setRetries(retries)
 
@@ -165,3 +173,4 @@ npm run build
 [object]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object
 [boolean]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Boolean_type
 [function]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function
+[asyncfunction]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/AsyncFunction
