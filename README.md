@@ -67,6 +67,20 @@ The `fn` argument must be a function or async function taking two arguments retu
 Returning an ended readable stream forces the resilient stream to be ended.
 Returning a destroyed stream forces the resilient stream to retry the generator once until the limit is reached.
 
+#### Event: 'data'
+
+* `chunk`: &lt;[Buffer][buffer]&gt;
+
+The `'data'` event is emitted whenever the active underlying stream pushes relinquishes ownership of a chunk to the resilient stream which in turn pushes the chunk out to a consumer.
+
+[See [stream.Readable (Event: 'data')](https://nodejs.org/api/stream.html#stream_event_data)]
+
+#### Event: 'end'
+
+The `'end'` event is emitted whenever there is no more data within the resilient stream's underlying resources to be consumed.
+
+[See [stream.Readable (Event: 'end')](https://nodejs.org/api/stream.html#stream_event_end)]
+
 #### Event: 'retry'
 
 * `retrySlice`: &lt;[RetrySlice](#retryslice)&gt;
@@ -88,6 +102,14 @@ self.getRetries() === self.getRetryCount()
 
 At this point, the resilient stream is destroyed and the specified [GenFn](#genfn) isn't called.
 This, ends the resilient iteration.
+
+#### Event: 'readable'
+
+The `'readable'` event is emitted when there is data available to be read from the stream or the end of the stream has been reached.
+
+Either way, the `retriableStream.read()` method would return the available data and reset the flow state so all buffered data flushes.
+
+[See [stream.Readable (Event: 'readable')](https://nodejs.org/api/stream.html#stream_event_readable)]
 
 ### <a id='genfn'></a>GenFn: [`Function`][function]|[`AsyncFunction`][asyncfunction]
 
@@ -168,8 +190,10 @@ npm run build
 [downloads-url]: https://npmjs.org/package/xresilient
 [downloads-image]: https://badgen.net/npm/dm/xresilient
 
+[any]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Data_types
 [Error]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error
 [number]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type
+[buffer]: https://nodejs.org/api/buffer.html#buffer_class_buffer
 [object]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object
 [boolean]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Boolean_type
 [function]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function
