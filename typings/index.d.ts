@@ -9,7 +9,7 @@ import * as stream from 'stream';
 type ProtoExtends<T, U> = U & Omit<T, keyof U>;
 
 declare function xresilient<T = NodeJS.ReadableStream>(
-  fn: (storeSlice: xresilient.ResilientStore<T>) => T, options?: xresilient.ResilientOpts<T>
+  fn: (storeSlice: xresilient.ResilientStore<T>) => T | Promise<T>, options?: xresilient.ResilientOpts<T>
 ): xresilient.ResilientStream<T>;
 
 interface _ResilientStream<T> {
