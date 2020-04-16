@@ -33,7 +33,7 @@ declare namespace xresilient {
   }
 
   interface ResilientStore<T> extends RetrySlice<T> {
-    chunkCount: number;
+    trialCount: number;
   }
 
   interface ResilientStream<T> extends ProtoExtends<stream.Readable, _ResilientStream<T>> { }
